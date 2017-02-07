@@ -7,40 +7,58 @@
 
   config.$inject = ['$stateProvider', '$urlRouterProvider'];
 
-  function config ($stateProvider, $urlRouterProvider) {
+  function config($stateProvider, $urlRouterProvider) {
     $stateProvider
       .state('home', {
-        url : '/',
-        views : {
-          'header' : {
-            templateUrl : '/static/views/layout/header.html',
-            controller : 'HeaderController',
-            controllerAs : 'vm'
+        url: '/',
+        views: {
+          'header': {
+            templateUrl: '/static/views/layout/header.html',
+            controller: 'HeaderController',
+            controllerAs: 'vm'
           },
           'content' : {
-            templateUrl : '/static/views/layout/index.html',
-            controller : 'IndexController',
-            controllerAs : 'vm'
+            templateUrl: '/static/views/layout/index.html',
+            controller: 'IndexController',
+            controllerAs: 'vm'
+          }
+        }
+      })
+      .state('home.landing', {
+        views: {
+          'content@': {
+            templateUrl: '/static/views/layout/index.html',
+            controller: 'LandingController',
+            controllerAs: 'vm'
+          }
+        }
+      })
+      .state('home.dashboard', {
+        views: {
+          'content@': {
+            templateUrl: '/static/views/layout/index.html',
+            controller: 'DashboardController',
+            controllerAs: 'vm'
           }
         }
       })
       .state('home.register', {
-        url : 'register',
-        views : {
-          'content@' : {
-            templateUrl : '/static/views/authentication/register.html',
-            controller : 'RegisterController',
-            controllerAs : 'vm'
+        url: 'register',
+        views: {
+          'content@': {
+            templateUrl: '/static/views/authentication/register.html',
+            controller: 'RegisterController',
+            controllerAs: 'vm'
           }
         }
       })
       .state('home.login', {
-        url : 'login',
-        views : {
+        url: 'login',
+        views: {
           'content@' : {
-            templateUrl : '/static/views/authentication/login.html',
-            controller : 'LoginController',
-            controllerAs : 'vm'
+            templateUrl: '/static/views/authentication/login.html',
+            controller: 'LoginController',
+            controllerAs: 'vm'
           }
         }
       })

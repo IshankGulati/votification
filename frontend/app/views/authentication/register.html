@@ -4,28 +4,59 @@
 
     <div class="well">
       <form role="form" ng-submit="vm.register()" name="signup_form" novalidate>
-        <div class="form-group">
+        <div class="form-group" show-errors ng-class="{ 'has-error':
+          signup_form.email.$invalid && !signup_form.email.$pristine }">
           <label for="register__email">Email</label>
-          <input type="email" class="form-control" id="register__email" ng-model="vm.email" 
-            placeholder="Enter your email" required/>
+          <input type="email" class="form-control" id="register__email" ng-model="vm.email"
+            placeholder="Enter your email" required ng-unique="{key: 'Account',
+            property: 'email'}" name="email" autofocus/>
+          <span ng-show="signup_form.email.$invalid && signup_form.email.$dirty">
+            <p class="help-block" ng-show="signup_form.email.$error.required">
+              Email is required
+            </p>
+            <p class="help-block" ng-show="signup_form.email.$error.email">
+              Must be a valid Email
+            </p>
+            <p class="help-block" ng-show="signup_form.email.$error.unique">
+              This Email is already in use
+            </p>
+          </span>
         </div>
 
-        <div class="form-group">
+        <div class="form-group" show-errors ng-class="{ 'has-error':
+          signup_form.username.$invalid && !signup_form.username.$pristine }">
           <label for="register__username">Username</label>
-          <input type="text" class="form-control" id="register__username" ng-model="vm.username" 
-            placeholder="Enter your username" required/>
+          <input type="text" class="form-control" id="register__username"
+          ng-model="vm.username" placeholder="Enter your username" required
+          ng-unique="{key: 'Account', property: 'username'}" name="username"
+          autofocus />
+          <span ng-show="signup_form.username.$invalid && signup_form.username.$dirty">
+            <p class="help-block" ng-show="signup_form.username.$error.required">
+              Username is required
+            </p>
+            <p class="help-block" ng-show="signup_form.username.$error.unique">
+              Username is already taken
+            </p>
+          </span>
         </div>
 
-        <div class="form-group">
+        <div class="form-group" show-errors ng-class="{ 'has-error':
+          signup_form.password.$invalid && !signup_form.password.$pristine }">
           <label for="register__password">Password</label>
-          <input type="password" class="form-control" id="register__password" ng-model="vm.password" 
-            placeholder="Enter password" required ng-minlength="8"/>
-          <p class="help-block" ng-show="signup_form.password.$error.required">Password is required</p>
-          <p class="help-block" ng-show="signup_form.password.$error.minlength">Password should be at least 8 characters</p>          
+          <input type="password" class="form-control" id="register__password"
+          ng-model="vm.password" placeholder="Enter password" required
+          ng-minlength="8" name="password"/>
+          <span ng-show="signup_form.password.$invalid && signup_form.password.$dirty">
+            <p class="help-block" ng-show="signup_form.password.$error.required">
+              Password is required</p>
+            <p class="help-block" ng-show="signup_form.password.$error.minlength">
+              Password should be at least 8 characters</p>
+          </span>
         </div>
 
         <div class="form-group">
-          <button type="submit" class="btn btn-primary">Submit</button>
+          <button type="submit" class="btn btn-primary"
+            ng-disabled="signup_form.$invalid">Submit</button>
         </div>
       </form>
     </div>

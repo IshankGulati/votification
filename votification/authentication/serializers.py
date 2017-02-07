@@ -15,7 +15,6 @@ class AccountSerializer(serializers.ModelSerializer):
         token, created = Token.objects.get_or_create(user=account)
         return token.key
 
-
     class Meta:
         model = Account
         fields = ('id', 'email', 'username', 'created_at', 'updated_at',
@@ -23,23 +22,23 @@ class AccountSerializer(serializers.ModelSerializer):
                   'confirm_password', 'token')
         read_only_fields = ('created_at', 'updated_at', 'token',)
 
-        def create(self, validated_data):
-            return Account.objects.create(**validated_data)
+    def create(self, validated_data):
+        return Account.objects.create(**validated_data)
 
-        def update(self, instance, validated_data):
-            instance.username = validated_data.get('username',
-                                                   instance.username)
-            instance.status = validated_data.get('status', instance.status)
+    def update(self, instance, validated_data):
+        instance.username = validated_data.get('username',
+                                               instance.username)
+        instance.status = validated_data.get('status', instance.status)
 
+        instance.save()
+
+        password = validated_data.get('password', None)
+        confirm_password = validated_data.get('confirm_password', None)
+
+        if password and confirm_password and password == confirm_password:
+            instance.set_password(password)
             instance.save()
 
-            password = validated_data.get('password', None)
-            confirm_password = validated_data.get('confirm_password', None)
+        update_session_auth_hash(self.context.get('request'), instance)
 
-            if password and confirm_password and password == confirm_password:
-                instance.set_password(password)
-                instance.save()
-
-            update_session_auth_hash(self.context.get('request'), instance)
-
-            return instance
+        return instance

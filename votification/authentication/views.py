@@ -1,6 +1,7 @@
-from django.contrib.auth import authenticate, login, logout
-
 import logging
+
+from django.contrib.auth import authenticate, login, logout
+from django.http.response import JsonResponse
 
 from rest_framework import permissions, viewsets, status, views
 from rest_framework.response import Response
@@ -41,6 +42,7 @@ class AccountViewSet(viewsets.ModelViewSet):
 
 
 class LoginView(views.APIView):
+
     def post(self, request, format=None):
         data = request.data
 
@@ -74,4 +76,24 @@ class LogoutView(views.APIView):
     def post(self, request, format=None):
         logout(request)
 
-        return Response({}, status=status.HTTP_204_NO_CONTENT)
+        return Response({'message': 'Successfully '},
+                        status=status.HTTP_204_NO_CONTENT)
+
+
+class UniqueDirectiveView(views.APIView):
+    permission_classes = (permissions.AllowAny,)
+
+    def post(self, request, format=None):
+        """Handled get request for UniqueDirectiveView
+        """
+        data = request.data
+        key = data.get('property')
+        value = data.get('value')
+        account = Account.objects.values_list('id', flat=True)\
+            .filter(**{key: value})
+        if account:
+            is_unique = False
+        else:
+            is_unique = True
+
+        return JsonResponse({'isUnique': is_unique})

@@ -14,7 +14,7 @@
     <!-- endbower -->
     <!-- endbuild -->
     <!-- build:css(.tmp) styles/main.css -->
-    <link rel="stylesheet" href="{% static 'styles/main.css' %}">
+    <link rel="stylesheet" href="{% static 'styles/main.css' %}" />
     <!-- endbuild -->
   </head>
   <body ng-app="votificationApp">
@@ -47,13 +47,14 @@
 
         <script src="{% static 'scripts/layout/layout.module.js' %}"></script>
         <script src="{% static 'scripts/layout/controllers/header.controller.js' %}"></script>
-        <script src="{% static 'scripts/layout/controllers/index.controller.js' %}"></script>        
+        <script src="{% static 'scripts/layout/controllers/index.controller.js' %}"></script>
 
         <script src="{% static 'scripts/authentication/authentication.module.js' %}"></script>
         <script src="{% static 'scripts/authentication/controllers/login.controller.js' %}"></script>
         <script src="{% static 'scripts/authentication/controllers/register.controller.js' %}"></script>
-        <script src="{% static 'scripts/authentication/services/authentication.service.js' %}"></script>
         <script src="{% static 'scripts/authentication/services/localStorage.service.js' %}"></script>
+        <script src="{% static 'scripts/authentication/services/authentication.service.js' %}"></script>
+        <script src="{% static 'scripts/authentication/directives/unique.directive.js' %}"></script>
         <!-- endbuild -->
 </body>
 </html>

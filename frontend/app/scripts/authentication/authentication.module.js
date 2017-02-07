@@ -4,7 +4,8 @@
   angular
     .module('votificationApp.authentication',[
       'votificationApp.authentication.controllers',
-      'votificationApp.authentication.services'
+      'votificationApp.authentication.services',
+      'votificationApp.authentication.directives',
     ]);
 
   angular
@@ -15,4 +16,7 @@
       'ngCookies',
       'ngResource'
     ]);
+
+  angular
+    .module('votificationApp.authentication.directives', []);
 })();

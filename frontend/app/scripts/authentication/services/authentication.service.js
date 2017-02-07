@@ -16,14 +16,13 @@
 
     var Authentication = {
       register: register,
-      login : login,
-      logout : logout,
-      isAuthenticated : isAuthenticated,
-      // setAuthenticatedAccount : setAuthenticatedAccount,
-      // getAuthenticatedAccount : getAuthenticatedAccount,
-      storeUserCredentials : storeUserCredentials,
-      unauthenticate : unauthenticate,
-      getUserName : getUserName
+      login: login,
+      logout: logout,
+      isAuthenticated: isAuthenticated,
+      storeUserCredentials: storeUserCredentials,
+      unauthenticate: unauthenticate,
+      getUserName: getUserName,
+      checkUniqueValue: checkUniqueValue,
     };
 
     loadUserCredentials();
@@ -31,11 +30,11 @@
     return Authentication;
 
     function useCredentials(credentials) {
-      console.log('use called');      
+      console.log('use called');
       isauthenticated = true;
       username = credentials.username;
       authToken = 'Token ' + credentials.token;
-      
+
       // Set the token as header for your requests!
       $http.defaults.headers.common['Authorization'] = authToken;
     }
@@ -78,6 +77,7 @@
       function registerErrorFn(data, status, login, config) {
         console.error(data);
         console.error('Registration failure!!');
+        $rootScope.$broadcast('registration:failure');
       }
     }
 
@@ -99,29 +99,18 @@
           username : data.data.username,
           token : data.data.token,
         });
-        // Authentication.setAuthenticatedAccount(data.data);
         window.location = '/';
       }
 
       function loginErrorFn(data, status, headers, config) {
         console.error('Login failure!');
+        $rootScope.$broadcast('login:failure');
       }
     }
-
-    // function getAuthenticatedAccount() {
-    //   if(!$cookies.getObject('authenticatedAccount')) {
-    //     return;
-    //   }
-    //   return $cookies.getObject('authenticatedAccount');
-    // }
 
     function isAuthenticated() {
       return isauthenticated;
     }
-
-    // function setAuthenticatedAccount(account) {
-    //   $cookies.putObject('authenticatedAccount', account);
-    // }
 
     function unauthenticate() {
       destroyUserCredentials();
@@ -144,6 +133,16 @@
 
     function getUserName() {
       return username;
+    }
+
+    function checkUniqueValue(id, property, value) {
+      return $http.post('/api/v1/auth/check-unique-val/', {
+        id: id,
+        property: property,
+        value: value
+      }).then(function (response) {
+        return response.data.isUnique;
+      });
     }
   }
 })();
