@@ -1,0 +1,15 @@
+<div class="row" ng-cloak>
+  <div ng-repeat="column in vm.columns">
+    <div class="col-xs-12">
+      <div ng-repeat="poll in column">
+        <poll poll="poll"></poll>
+      </div>
+    </div>
+  </div>
+
+  <div ng-hide="vm.columns && vm.columns.length">
+    <div class="col-sm-12 no-polls-here">
+      <em>The are no polls here.</em>
+    </div>
+  </div>
+</div>

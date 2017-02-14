@@ -15,6 +15,8 @@ logger = logging.getLogger('django')
 
 
 class AccountViewSet(viewsets.ModelViewSet):
+    """ Viewset for a user account.
+    """
     lookup_field = 'username'
     queryset = Account.objects.all()
     serializer_class = AccountSerializer
@@ -42,6 +44,8 @@ class AccountViewSet(viewsets.ModelViewSet):
 
 
 class LoginView(views.APIView):
+    """View for login request.
+    """
 
     def post(self, request, format=None):
         data = request.data
@@ -71,6 +75,8 @@ class LoginView(views.APIView):
 
 
 class LogoutView(views.APIView):
+    """View for logout request.
+    """
     permission_classes = (permissions.IsAuthenticated,)
 
     def post(self, request, format=None):
@@ -81,10 +87,13 @@ class LogoutView(views.APIView):
 
 
 class UniqueDirectiveView(views.APIView):
+    """ View to handle ngUnique angular directive that checks if any field is
+        already present in database.
+    """
     permission_classes = (permissions.AllowAny,)
 
     def post(self, request, format=None):
-        """Handled get request for UniqueDirectiveView
+        """Handles post request for UniqueDirectiveView
         """
         data = request.data
         key = data.get('property')

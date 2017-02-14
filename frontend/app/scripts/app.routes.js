@@ -12,32 +12,17 @@
       .state('home', {
         url: '/',
         views: {
+          'navbar': {
+            templateUrl: '/static/views/layout/navbar.html',
+            controller: 'NavbarController',
+            controllerAs: 'vm'
+          },
           'header': {
             templateUrl: '/static/views/layout/header.html',
-            controller: 'HeaderController',
-            controllerAs: 'vm'
           },
           'content' : {
             templateUrl: '/static/views/layout/index.html',
             controller: 'IndexController',
-            controllerAs: 'vm'
-          }
-        }
-      })
-      .state('home.landing', {
-        views: {
-          'content@': {
-            templateUrl: '/static/views/layout/index.html',
-            controller: 'LandingController',
-            controllerAs: 'vm'
-          }
-        }
-      })
-      .state('home.dashboard', {
-        views: {
-          'content@': {
-            templateUrl: '/static/views/layout/index.html',
-            controller: 'DashboardController',
             controllerAs: 'vm'
           }
         }
@@ -74,6 +59,6 @@
       })
       ;
 
-    // $urlRouterProvider.otherwise('/');
+    $urlRouterProvider.otherwise('/');
   }
 })();

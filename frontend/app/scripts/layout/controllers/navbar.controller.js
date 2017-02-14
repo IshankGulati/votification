@@ -2,11 +2,11 @@
   'use strict';
   angular
     .module('votificationApp.layout.controllers')
-    .controller('HeaderController', HeaderController);
+    .controller('NavbarController', NavbarController);
 
-  HeaderController.$inject = ['$scope', '$rootScope', 'Authentication'];
+  NavbarController.$inject = ['$scope', '$rootScope', 'Authentication'];
 
-  function HeaderController($scope, $rootScope, Authentication) {
+  function NavbarController($scope, $rootScope, Authentication) {
     var vm = this;
     vm.loggedIn = false;
     vm.logout = logout;

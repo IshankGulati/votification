@@ -1,0 +1,38 @@
+from rest_framework import viewsets, permissions
+from rest_framework.response import Response
+
+from polls.models import Poll, Option
+from polls.serializers import PollSerializer, OptionSerializer
+from polls.permissions import IsAuthorOfPoll
+
+
+class PollViewSet(viewsets.ModelViewSet):
+    """Fetch all the polls
+    """
+    queryset = Poll.objects.all()
+    serializer_class = PollSerializer
+
+    def get_permissions(self):
+        if self.request.method in permissions.SAFE_METHODS:
+            return (permissions.AllowAny(),)
+        return (permissions.IsAuthenticated(), IsAuthorOfPoll(),)
+
+    def perform_create(self, serializer):
+        instance = serializer.save(author=self.request.user)
+
+        return super(PollViewSet, self).perform_create(serializer)
+
+
+class AccountPollViewSet(viewsets.ViewSet):
+    """Fetch polls created by a particular user
+    """
+    # options will be fetched in another query to prevent joins
+    queryset = Poll.objects.select_related('author').prefetch_related('options').all()
+    serializer_class = PollSerializer
+    permission_classes = (permissions.IsAuthenticated,)
+
+    def list(self, request, account_username=None):
+        queryset = self.queryset.filter(author__username=account_username)
+        serializer = self.serializer_class(queryset, many=True)
+
+        return Response(serializer.data)

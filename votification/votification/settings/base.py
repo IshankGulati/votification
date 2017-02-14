@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'rest_framework.authtoken',
     'authentication',
+    'polls'
 ]
 
 ROOT_URLCONF = 'votification.urls'
@@ -120,7 +121,8 @@ REST_FRAMEWORK = {
     # or allow read-only access for unauthenticated users.
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework.authentication.TokenAuthentication',
-    )
+    ),
+    'DEFAULT_PAGINATION_CLASS': 'votification.pagination.VotificationPagination',
 }
 
 AUTH_USER_MODEL = 'authentication.Account'

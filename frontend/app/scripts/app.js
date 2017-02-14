@@ -7,6 +7,7 @@
       'votificationApp.authentication',
       'votificationApp.config',
       'votificationApp.layout',
+      'votificationApp.polls',
     ]);
 
   angular

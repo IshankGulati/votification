@@ -16,17 +16,16 @@ Including another URLconf
 from django.conf.urls import url, include
 from django.contrib import admin
 
-from rest_framework_nested import routers
-
-from authentication.views import AccountViewSet
 from votification.views import IndexView
+from authentication.urls import account_router, user_votes_router
+from votes.urls import votes_router
 
-router = routers.SimpleRouter()
-router.register(r'accounts', AccountViewSet)
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
-    url(r'^api/v1/', include(router.urls)),
+    url(r'^api/v1/', include(account_router.urls)),
+    url(r'^api/v1/', include(votes_router.urls)),
+    url(r'^api/v1/', include(user_votes_router.urls)),
     url(r'^api/v1/auth/', include('authentication.urls')),
     url(r'^.*$', IndexView.as_view(), name='index'),
 ]
