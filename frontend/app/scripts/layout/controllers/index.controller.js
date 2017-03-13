@@ -34,7 +34,7 @@
        * @desc Update polls array
        */
       function pollsSuccessFn(data, status, headers, config) {
-        vm.posts = data.data;
+        vm.polls = data.data;
       }
 
       /**

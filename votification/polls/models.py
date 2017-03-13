@@ -38,3 +38,14 @@ class Option(models.Model):
     class Meta:
         # option which is added first is fetched first
         ordering = ('created_at',)
+
+
+class Votes(models.Model):
+    """
+    """
+    user = models.ForeignKey(Account, on_delete=models.CASCADE)
+    poll = models.ForeignKey(Poll, on_delete=models.CASCADE)
+    option_voted = models.ForeignKey(Option, on_delete=models.CASCADE)
+
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)

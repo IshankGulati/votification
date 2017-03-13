@@ -28,3 +28,8 @@ class OptionSerializer(serializers.ModelSerializer):
         model = Option
         fields = ('id', 'option', 'count', 'created_at', 'updated_at')
         read_only_fields = ('id', 'created_at', 'updated_at')
+
+
+class VoteSerializer(serializers.ModelSerializer):
+    user = AccountSerializer(read_only=True, required=False)
+    poll = PollSerializer(read_only=True, required=False)

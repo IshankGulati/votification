@@ -1,5 +1,6 @@
-from rest_framework import viewsets, permissions
+from rest_framework import views, viewsets, permissions
 from rest_framework.response import Response
+from django.db.models import Prefetch
 
 from polls.models import Poll, Option
 from polls.serializers import PollSerializer, OptionSerializer
@@ -36,3 +37,18 @@ class AccountPollViewSet(viewsets.ViewSet):
         serializer = self.serializer_class(queryset, many=True)
 
         return Response(serializer.data)
+
+
+class VoteView(views.APIView):
+    """Cast Vote in a poll
+    """
+    permission_classes = (permissions.IsAuthenticated,)
+    def put(self, request, format=None):
+        data = request.data
+        q_id = data.get('q_id')
+        op_id = data.get('op_id')
+        queryset = Poll.objects.get(id=q_id).prefetch_related(Prefetch('options',
+                                                                       queryset=Option.objects.get(id=op_id),
+                                                                       to_attr='selected_option'))
+        current_votes = queryset.selected_option.count
+        queryset.selected_option.update(count=current_votes+1)

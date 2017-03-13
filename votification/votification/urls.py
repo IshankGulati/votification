@@ -26,6 +26,7 @@ urlpatterns = [
     url(r'^api/v1/', include(account_router.urls)),
     url(r'^api/v1/', include(votes_router.urls)),
     url(r'^api/v1/', include(user_votes_router.urls)),
+    url(r'^api/v1/vote/', include('polls.urls')),
     url(r'^api/v1/auth/', include('authentication.urls')),
     url(r'^.*$', IndexView.as_view(), name='index'),
 ]

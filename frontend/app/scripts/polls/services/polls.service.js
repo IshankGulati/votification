@@ -63,5 +63,16 @@
         content: content
       });
     }
+
+    /**
+     * @name vote
+     * @desc submit a new vote
+     * @param {string} content The content of new poll
+     * @returns {Promise}
+     * @memberOf votificationApp.polls.services.Polls
+     */
+    function vote() {
+
+    }
   }
 })();

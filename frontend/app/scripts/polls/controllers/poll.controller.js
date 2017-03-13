@@ -18,6 +18,10 @@
    */
   function PollController(Polls, $scope) {
 
+    function submit() {
+      Polls.vote();
+    }
+
   }
 
 })();
